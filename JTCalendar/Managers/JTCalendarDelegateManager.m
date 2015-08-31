@@ -38,11 +38,13 @@
     }
     
     NSString *text = nil;
+    NSString *monthWithYear = nil;
     
     if(date){
         NSCalendar *calendar = _manager.dateHelper.calendar;
         NSDateComponents *comps = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth fromDate:date];
         NSInteger currentMonthIndex = comps.month;
+        NSInteger currentYear = comps.year;
         
         static NSDateFormatter *dateFormatter = nil;
         if(!dateFormatter){
@@ -56,10 +58,14 @@
             currentMonthIndex += 12;
         }
         
-        text = [[dateFormatter standaloneMonthSymbols][currentMonthIndex - 1] capitalizedString];
+        text = [dateFormatter standaloneMonthSymbols][currentMonthIndex - 1];
+        NSString *month = [text uppercaseString];
+        monthWithYear = [NSString stringWithFormat:@"%@  %i", month, currentYear];
     }
         
-    [(UILabel *)menuItemView setText:text];
+//    [(UILabel *)menuItemView setText:text];
+    [(UILabel *)menuItemView setText:monthWithYear];
+
 }
 
 #pragma mark - Content view
